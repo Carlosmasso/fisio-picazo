@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0c0f;
+  --foreground: #edeff1;
+
+  --color-bg: #0a0c0f;
+  --color-surface: #15181c;
+  --color-surface-2: #1c2025;
+  --color-line: #262b31;
+  --color-muted: #8b939f;
+  --color-ember: #ff5a3c;
+  --color-ember-hover: #ff7050;
+  --color-ember-dim: #7a2c1f;
+  --color-frost: #6fe7dd;
+  --color-frost-dim: #1c3d3a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bg: var(--color-bg);
+  --color-surface: var(--color-surface);
+  --color-surface-2: var(--color-surface-2);
+  --color-line: var(--color-line);
+  --color-muted: var(--color-muted);
+  --color-ember: var(--color-ember);
+  --color-ember-hover: var(--color-ember-hover);
+  --color-ember-dim: var(--color-ember-dim);
+  --color-frost: var(--color-frost);
+  --color-frost-dim: var(--color-frost-dim);
+
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-space-grotesk);
+  --font-mono: var(--font-plex-mono);
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-bg);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@keyframes draw-pulse {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0px var(--color-ember));
+  }
+  50% {
+    filter: drop-shadow(0 0 6px var(--color-ember));
+  }
+}
+
+.pulse-path {
+  fill: none;
+  stroke: var(--color-ember);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation:
+    draw-pulse 2.4s ease-out forwards,
+    pulse-glow 2.4s ease-in-out 2.4s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+button {
+  cursor: pointer;
+}
