@@ -1,17 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useModal } from "./ModalProvider";
 import { brand } from "../lib/site-content";
+import { signOut } from "../actions/auth";
 
 const navLinks = [
-  { href: "#zonas", label: "Zonas" },
-  { href: "#metodo", label: "Método" },
-  { href: "#portal", label: "Portal cliente" },
-  { href: "#planes", label: "Planes" },
+  { href: "/#zonas", label: "Zonas" },
+  { href: "/#metodo", label: "Método" },
+  { href: "/portal", label: "Portal cliente" },
+  { href: "/#planes", label: "Planes" },
 ];
 
-export default function Nav() {
+export default function Nav({ profile = null }) {
   const [scrolled, setScrolled] = useState(false);
   const { openModal } = useModal();
 
@@ -30,34 +32,66 @@ export default function Nav() {
         scrolled ? "border-line" : "border-transparent"
       }`}
     >
-      <a href="#" className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide">
+      <Link href="/" className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide">
         <span className="h-2 w-2 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
         {brand.name.toUpperCase()}
         <span className="font-normal text-muted"> · {brand.tagline}</span>
-      </a>
+      </Link>
 
       <div className="hidden gap-9 text-sm text-muted md:flex">
         {navLinks.map((link) => (
-          <a key={link.href} href={link.href} className="transition-colors hover:text-foreground">
+          <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
             {link.label}
-          </a>
+          </Link>
         ))}
       </div>
 
       <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => openModal("login")}
-          className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
-        >
-          Acceso clientes
-        </button>
-        <a
-          href="#planes"
-          className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
-        >
-          Reservar valoración
-        </a>
+        {profile ? (
+          <>
+            <span className="hidden text-sm text-muted sm:inline">
+              Hola, {profile.full_name?.split(" ")[0] || "paciente"}
+            </span>
+            <form action={signOut}>
+              <button
+                type="submit"
+                className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+              >
+                Cerrar sesión
+              </button>
+            </form>
+            {profile.role === "admin" && (
+              <Link
+                href="/admin"
+                className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+              >
+                Admin
+              </Link>
+            )}
+            <Link
+              href="/portal"
+              className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
+            >
+              Mi portal
+            </Link>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={() => openModal("login")}
+              className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+            >
+              Acceso clientes
+            </button>
+            <Link
+              href="/#planes"
+              className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
+            >
+              Reservar valoración
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

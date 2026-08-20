@@ -1,6 +1,8 @@
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import ModalProvider from "./components/ModalProvider";
+import Nav from "./components/Nav";
+import { getProfile } from "./lib/dal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -26,14 +28,19 @@ export const metadata = {
     "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const profile = await getProfile();
+
   return (
     <html
       lang="es"
       className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable}`}
     >
       <body className="bg-bg font-sans text-foreground antialiased">
-        <ModalProvider>{children}</ModalProvider>
+        <ModalProvider>
+          <Nav profile={profile} />
+          {children}
+        </ModalProvider>
       </body>
     </html>
   );

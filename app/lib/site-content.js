@@ -10,6 +10,11 @@ export const heroStats = [
   { label: "ALTAS DEPORTIVAS", value: "96%" },
 ];
 
+// The `id` of every zone below must also exist in the zone check
+// constraints in supabase/schema.sql (profiles.injury_zone, exercises.zone,
+// programs.zone) — those columns feed the admin dropdowns built from this
+// array. Adding a zone here without updating schema.sql will make the
+// database reject any insert that uses it.
 export const zones = [
   {
     id: "rodilla",
@@ -46,6 +51,24 @@ export const zones = [
       "Propiocepción y control neuromuscular progresivo hasta superficies inestables y cambios de dirección a máxima velocidad.",
     tags: ["Propiocepción", "Fuerza", "Agilidad"],
     exerciseCount: 9,
+  },
+  {
+    id: "cadera",
+    label: "Cadera",
+    title: "Cadera — pubalgia / sobrecarga",
+    description:
+      "Control motor de la musculatura profunda y progresión de carga en gestos de bisagra de cadera, adaptado a tu deporte de impacto.",
+    tags: ["Core", "Movilidad cadera", "Carga"],
+    exerciseCount: 10,
+  },
+  {
+    id: 'pierna',
+    label: 'Pierna completa',
+    title: 'Pierna completa — readaptación funcional',
+    description:
+      'Progresión de fuerza y potencia en gestos de salto, carrera y cambios de dirección, adaptado a tu deporte.',
+    tags: ['Fuerza', 'Potencia', 'Agilidad'],
+    exerciseCount: 12,
   },
   {
     id: "espalda",

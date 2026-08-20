@@ -1,4 +1,3 @@
-import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Reveal from "./components/Reveal";
 import SectionHeader from "./components/SectionHeader";
@@ -12,8 +11,6 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <>
-      <Nav />
-
       <Hero />
 
       <section id="zonas" className="border-t border-line px-8 py-27.5">
