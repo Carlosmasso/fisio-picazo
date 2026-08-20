@@ -5,17 +5,19 @@ import Link from "next/link";
 import { useModal } from "./ModalProvider";
 import { brand } from "../lib/site-content";
 import { signOut } from "../actions/auth";
+import { LogOut } from "lucide-react";
 
 const navLinks = [
   { href: "/#zonas", label: "Zonas" },
   { href: "/#metodo", label: "Método" },
-  { href: "/portal", label: "Portal cliente" },
+  // { href: "/portal", label: "Portal cliente" },
   { href: "/#planes", label: "Planes" },
 ];
 
 export default function Nav({ profile = null }) {
   const [scrolled, setScrolled] = useState(false);
   const { openModal } = useModal();
+  const isAdmin = profile?.role === "admin";
 
   useEffect(() => {
     function onScroll() {
@@ -32,7 +34,10 @@ export default function Nav({ profile = null }) {
         scrolled ? "border-line" : "border-transparent"
       }`}
     >
-      <Link href="/" className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide">
+      <Link
+        href="/"
+        className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide"
+      >
         <span className="h-2 w-2 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
         {brand.name.toUpperCase()}
         <span className="font-normal text-muted"> · {brand.tagline}</span>
@@ -40,7 +45,11 @@ export default function Nav({ profile = null }) {
 
       <div className="hidden gap-9 text-sm text-muted md:flex">
         {navLinks.map((link) => (
-          <Link key={link.href} href={link.href} className="transition-colors hover:text-foreground">
+          <Link
+            key={link.href}
+            href={link.href}
+            className="transition-colors hover:text-foreground"
+          >
             {link.label}
           </Link>
         ))}
@@ -52,28 +61,20 @@ export default function Nav({ profile = null }) {
             <span className="hidden text-sm text-muted sm:inline">
               Hola, {profile.full_name?.split(" ")[0] || "paciente"}
             </span>
-            <form action={signOut}>
-              <button
-                type="submit"
-                className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
-              >
-                Cerrar sesión
-              </button>
-            </form>
-            {profile.role === "admin" && (
-              <Link
-                href="/admin"
-                className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
-              >
-                Admin
-              </Link>
-            )}
+
             <Link
-              href="/portal"
+              href={isAdmin ? "/admin" : "/portal"}
               className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
             >
-              Mi portal
+              {isAdmin ? "Admin" : "Mi portal"}
             </Link>
+
+            <button
+              onClick={signOut}
+              className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+            >
+              <LogOut size={24} />
+            </button>
           </>
         ) : (
           <>

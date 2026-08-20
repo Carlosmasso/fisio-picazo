@@ -35,6 +35,70 @@
   --font-mono: var(--font-plex-mono);
 }
 
+/* ---- Theme lab: temporary light-palette candidates, toggled via
+   ThemeLabSwitcher by setting data-theme-preview on <html>. Remove this
+   block (and the switcher) once a palette is chosen and baked into :root. ---- */
+
+[data-theme-preview="frost-ember-light"] {
+  --background: #f7f8f9;
+  --foreground: #14181d;
+  --color-bg: #f7f8f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef1f3;
+  --color-line: #e2e6ea;
+  --color-muted: #667085;
+  --color-ember: #ff5a3c;
+  --color-ember-hover: #ff7050;
+  --color-ember-dim: #ffe4de;
+  --color-frost: #0d9488;
+  --color-frost-dim: #ccfbf1;
+}
+
+[data-theme-preview="clinical-calm"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef2f6;
+  --color-line: #e2e8f0;
+  --color-muted: #64748b;
+  --color-ember: #2563eb;
+  --color-ember-hover: #3b76ef;
+  --color-ember-dim: #dbe7fd;
+  --color-frost: #10b981;
+  --color-frost-dim: #d1fae5;
+}
+
+[data-theme-preview="warm-sport"] {
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --color-bg: #fafaf9;
+  --color-surface: #ffffff;
+  --color-surface-2: #f2f1ef;
+  --color-line: #e7e5e4;
+  --color-muted: #78716c;
+  --color-ember: #f97316;
+  --color-ember-hover: #fb8b3d;
+  --color-ember-dim: #ffe4c7;
+  --color-frost: #0891b2;
+  --color-frost-dim: #cffafe;
+}
+
+[data-theme-preview="sage-sand"] {
+  --background: #f9f8f4;
+  --foreground: #2b2a25;
+  --color-bg: #f9f8f4;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1efe6;
+  --color-line: #e8e4d9;
+  --color-muted: #7a7565;
+  --color-ember: #d97757;
+  --color-ember-hover: #e08a6d;
+  --color-ember-dim: #f6e2d8;
+  --color-frost: #4d7c62;
+  --color-frost-dim: #dce8e1;
+}
+
 body {
   background: var(--color-bg);
   color: var(--foreground);
