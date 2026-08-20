@@ -21,7 +21,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "Álex Martín · Fisioterapia Deportiva",
+  title: "Álvaro Picazo · Fisioterapia Deportiva",
   description:
     "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.",
 };
