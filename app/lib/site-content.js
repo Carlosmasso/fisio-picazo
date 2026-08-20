@@ -1,6 +1,6 @@
 export const brand = {
   name: "Álvaro Picazo",
-  tagline: "fisio deportiva",
+  tagline: "fisio deportivo",
   city: "Albacete, ES",
 };
 
