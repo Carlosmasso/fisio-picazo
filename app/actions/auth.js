@@ -13,14 +13,25 @@ export async function signIn(prevState, formData) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
   if (error) {
     return { error: "Email o contraseña incorrectos." };
   }
 
+  // Consulta la tabla profiles
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", data.user?.id)
+    .single();
+
+  const isAdmin = profileData?.role === "admin";
   revalidatePath("/", "layout");
-  redirect("/portal");
+  redirect(isAdmin ? "/admin" : "/portal");
 }
 
 export async function signUp(prevState, formData) {
@@ -37,12 +48,15 @@ export async function signUp(prevState, formData) {
   if (!password || password.length < 8) {
     return { error: "La contraseña debe tener al menos 8 caracteres." };
   }
+  if (formData.get("privacy_accepted") !== "on") {
+    return { error: "Debes aceptar la política de privacidad para continuar." };
+  }
 
   const supabase = await createClient();
   const { error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: name } },
+    options: { data: { full_name: name, privacy_accepted: "true" } },
   });
 
   if (error) {
@@ -56,6 +70,7 @@ export async function signUp(prevState, formData) {
 }
 
 export async function signOut() {
+  console.log("signOut called");
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath("/", "layout");

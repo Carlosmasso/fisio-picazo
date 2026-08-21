@@ -6,6 +6,7 @@ import MethodSection from "./components/MethodSection";
 import PortalPreview from "./components/PortalPreview";
 import PricingSection from "./components/PricingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
+import LocationSection from "./components/LocationSection";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -83,6 +84,21 @@ export default function Home() {
           </Reveal>
           <Reveal>
             <TestimonialsSection />
+          </Reveal>
+        </div>
+      </section>
+
+      <section id="ubicacion" className="border-t border-line px-8 py-27.5">
+        <div className="mx-auto max-w-[1180px]">
+          <Reveal>
+            <SectionHeader
+              eyebrow="Ubicación"
+              title="Ven a conocernos en clínica"
+              description="En Albacete, en Clínica Graus. Escríbenos por WhatsApp si tienes cualquier duda antes de reservar."
+            />
+          </Reveal>
+          <Reveal>
+            <LocationSection />
           </Reveal>
         </div>
       </section>

@@ -14,6 +14,9 @@ const navLinks = [
   { href: "/#planes", label: "Planes" },
 ];
 
+const btnBase =
+  "rounded-lg border px-3 py-2 text-xs font-semibold transition-colors sm:px-5 sm:py-2.5 sm:text-sm";
+
 export default function Nav({ profile = null }) {
   const [scrolled, setScrolled] = useState(false);
   const { openModal } = useModal();
@@ -30,17 +33,17 @@ export default function Nav({ profile = null }) {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-[100] flex items-center justify-between border-b bg-bg/75 px-8 py-[22px] backdrop-blur-md transition-colors ${
+      className={`fixed inset-x-0 top-0 z-[100] flex items-center justify-between gap-3 border-b bg-bg/75 px-4 py-4 backdrop-blur-md transition-colors sm:px-8 sm:py-[22px] ${
         scrolled ? "border-line" : "border-transparent"
       }`}
     >
       <Link
         href="/"
-        className="flex items-center gap-2.5 font-display text-lg font-bold tracking-wide"
+        className="flex shrink-0 items-center gap-2 font-display text-base font-bold tracking-wide sm:gap-2.5 sm:text-lg"
       >
-        <span className="h-2 w-2 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
+        <span className="h-2 w-2 shrink-0 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
         {brand.name.toUpperCase()}
-        <span className="font-normal text-muted"> · {brand.tagline}</span>
+        <span className="hidden font-normal text-muted sm:inline"> · {brand.tagline}</span>
       </Link>
 
       <div className="hidden gap-9 text-sm text-muted md:flex">
@@ -55,7 +58,7 @@ export default function Nav({ profile = null }) {
         ))}
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex shrink-0 items-center gap-2 sm:gap-3">
         {profile ? (
           <>
             <span className="hidden text-sm text-muted sm:inline">
@@ -64,16 +67,18 @@ export default function Nav({ profile = null }) {
 
             <Link
               href={isAdmin ? "/admin" : "/portal"}
-              className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
+              className={`${btnBase} border-ember bg-ember text-bg hover:bg-ember-hover`}
             >
               {isAdmin ? "Admin" : "Mi portal"}
             </Link>
 
             <button
               onClick={signOut}
-              className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+              aria-label="Cerrar sesión"
+              className={`${btnBase} border-line hover:border-frost hover:text-frost`}
             >
-              <LogOut size={24} />
+              <LogOut size={16} className="sm:hidden" />
+              <LogOut size={18} className="hidden sm:block" />
             </button>
           </>
         ) : (
@@ -81,15 +86,17 @@ export default function Nav({ profile = null }) {
             <button
               type="button"
               onClick={() => openModal("login")}
-              className="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold transition-colors hover:border-frost hover:text-frost"
+              className={`${btnBase} border-line hover:border-frost hover:text-frost`}
             >
-              Acceso clientes
+              <span className="sm:hidden">Acceso</span>
+              <span className="hidden sm:inline">Acceso clientes</span>
             </button>
             <Link
               href="/#planes"
-              className="rounded-lg border border-ember bg-ember px-5 py-2.5 text-sm font-semibold text-bg transition-colors hover:bg-ember-hover"
+              className={`${btnBase} border-ember bg-ember text-bg hover:bg-ember-hover`}
             >
-              Reservar valoración
+              <span className="sm:hidden">Reservar</span>
+              <span className="hidden sm:inline">Reservar valoración</span>
             </Link>
           </>
         )}

@@ -3,6 +3,7 @@ import "./globals.css";
 import ModalProvider from "./components/ModalProvider";
 import Nav from "./components/Nav";
 import ThemeLabSwitcher from "./components/ThemeLabSwitcher";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import { getProfile } from "./lib/dal";
 
 const spaceGrotesk = Space_Grotesk({
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }) {
           {children}
         </ModalProvider>
         <ThemeLabSwitcher />
+        <FloatingWhatsApp />
       </body>
     </html>
   );

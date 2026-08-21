@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { brand } from "../lib/site-content";
 
 export default function Footer() {
@@ -15,8 +16,11 @@ export default function Footer() {
             Reservar valoración inicial
           </a>
         </div>
-        <div className="flex flex-wrap justify-between gap-3 text-[13px] text-muted">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-muted">
           <span>© 2026 {brand.name} · Fisioterapia Deportiva</span>
+          <Link href="/privacidad" className="transition-colors hover:text-foreground">
+            Política de privacidad
+          </Link>
           <span className="font-mono">{brand.city}</span>
         </div>
       </div>

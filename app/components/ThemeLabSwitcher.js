@@ -17,6 +17,7 @@ export default function ThemeLabSwitcher() {
   // "Oscuro" on reload even though the applied palette is preserved — an
   // acceptable trade-off for a temporary comparison tool.
   const [active, setActive] = useState("");
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("theme-preview") || "";
@@ -29,8 +30,10 @@ export default function ThemeLabSwitcher() {
     window.localStorage.setItem("theme-preview", id);
   }
 
+  if (!show) return null
+
   return (
-    <div className="fixed bottom-4 left-4 z-[300] flex max-w-[calc(100vw-2rem)] flex-wrap gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg">
+    <div className="fixed bottom-4 right-4 z-[300] flex max-w-[calc(100vw-2rem)] flex-wrap gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg">
       {themes.map((t) => (
         <button
           key={t.id}
@@ -45,6 +48,9 @@ export default function ThemeLabSwitcher() {
           {t.label}
         </button>
       ))}
+      <button type="button" onClick={() => setShow(false)} className="rounded-lg border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors border-line text-muted hover:border-frost hover:text-frost">
+        X
+      </button>
     </div>
   );
 }

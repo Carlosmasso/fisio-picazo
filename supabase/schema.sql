@@ -25,6 +25,10 @@ create table if not exists public.profiles (
 
 alter table public.profiles enable row level security;
 
+-- Added via ALTER (not inline above) so it lands even if this table already
+-- existed from an earlier run of this script.
+alter table public.profiles add column if not exists privacy_accepted_at timestamptz;
+
 -- Check constraints are declared here (not inline above) and dropped+recreated
 -- on every run, so re-running this script always converges to the values
 -- below even if the table already existed with an older/drifted constraint.
@@ -183,11 +187,15 @@ security definer
 set search_path = public
 as $$
 begin
-  insert into public.profiles (id, email, full_name)
+  insert into public.profiles (id, email, full_name, privacy_accepted_at)
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data ->> 'full_name', '')
+    coalesce(new.raw_user_meta_data ->> 'full_name', ''),
+    case
+      when new.raw_user_meta_data ->> 'privacy_accepted' = 'true' then now()
+      else null
+    end
   );
   return new;
 end;

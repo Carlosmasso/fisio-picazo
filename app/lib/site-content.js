@@ -10,6 +10,12 @@ export const heroStats = [
   { label: "ALTAS DEPORTIVAS", value: "96%" },
 ];
 
+export const location = {
+  name: "Álvaro Picazo Clínica Graus Fisioterapia",
+  address: "Clínica Graus, C. Jesús Nazareno, 2, 02002 Albacete, España",
+  whatsapp: "34619174159",
+};
+
 // The `id` of every zone below must also exist in the zone check
 // constraints in supabase/schema.sql (profiles.injury_zone, exercises.zone,
 // programs.zone) — those columns feed the admin dropdowns built from this
