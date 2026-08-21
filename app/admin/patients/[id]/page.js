@@ -5,7 +5,7 @@ import PainChart from "../../../components/PainChart";
 import ProgramHistory from "../../../components/ProgramHistory";
 import CompletedProgramModal from "./CompletedProgramModal";
 import PatientActionsMenu from "../../PatientActionsMenu";
-import ActionForm from "../../ActionForm";
+import ActionForm from "../../../components/ActionForm";
 
 import {
   createProgram,

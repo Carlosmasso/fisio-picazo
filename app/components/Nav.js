@@ -6,6 +6,7 @@ import { useModal } from "./ModalProvider";
 import { brand } from "../lib/site-content";
 import { signOut } from "../actions/auth";
 import { LogOut } from "lucide-react";
+import { toast } from "sonner";
 
 const navLinks = [
   { href: "/#zonas", label: "Zonas" },
@@ -73,7 +74,10 @@ export default function Nav({ profile = null }) {
             </Link>
 
             <button
-              onClick={signOut}
+              onClick={() => {
+                signOut();
+                toast.success("Sesión cerrada");
+              }}
               aria-label="Cerrar sesión"
               className={`${btnBase} border-line hover:border-frost hover:text-frost`}
             >

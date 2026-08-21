@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { updatePatient, resetPatientPassword, deletePatient } from "./actions";
-import ActionForm from "./ActionForm";
+import ActionForm from "../components/ActionForm";
 import { EllipsisVertical } from "lucide-react";
 
 const fieldClass =
