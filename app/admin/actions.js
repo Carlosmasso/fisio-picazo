@@ -55,6 +55,19 @@ export async function resetPatientPassword(patientId, prevState, formData) {
   };
 }
 
+export async function deletePatient(patientId, prevState, formData) {
+  await requireAdmin();
+
+  const supabaseAdmin = createAdminClient();
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(patientId);
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  redirect("/admin");
+}
+
 export async function createProgram(patientId, formData) {
   await requireAdmin();
   const supabase = await createClient();

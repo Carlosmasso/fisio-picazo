@@ -5,6 +5,8 @@ import PainChart from "../../../components/PainChart";
 import ProgramHistory from "../../../components/ProgramHistory";
 import CompletedProgramModal from "./CompletedProgramModal";
 import ResetPasswordButton from "./ResetPasswordButton";
+import DeletePatientButton from "./DeletePatientButton";
+
 import {
   createProgram,
   updateProgramStatus,
@@ -99,7 +101,13 @@ export default async function AdminPatientPage({ params, searchParams }) {
           <h2 className="text-xl font-semibold">{patient.full_name || patient.email}</h2>
           <p className="text-sm text-muted">{patient.email}</p>
         </div>
-        <ResetPasswordButton patientId={id} />
+        <div className="flex flex-wrap gap-3">
+          <ResetPasswordButton patientId={id} />
+          <DeletePatientButton
+            patientId={id}
+            patientName={patient.full_name || patient.email}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-8">
@@ -108,7 +116,7 @@ export default async function AdminPatientPage({ params, searchParams }) {
         {program && (
           <div>
             <div className="mb-8 flex flex-wrap items-center gap-4 rounded-2xl border border-line bg-surface p-6">
-              <span className="font-mono text-frost">
+              <span className="font-mono text-ember">
                 {zones.find((z) => z.id === program.zone)?.label ?? program.zone} · FASE{" "}
                 {program.phase}
               </span>
