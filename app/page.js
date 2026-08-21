@@ -18,6 +18,7 @@ const jsonLd = {
   description:
     "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.",
   telephone: `+${location.whatsapp}`,
+  email: location.email,
   address: {
     "@type": "PostalAddress",
     streetAddress: location.streetAddress,
@@ -25,6 +26,12 @@ const jsonLd = {
     addressLocality: location.addressLocality,
     addressCountry: location.addressCountry,
   },
+  openingHoursSpecification: location.hours.map((h) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
 };
 
 export default function Home() {
@@ -36,7 +43,7 @@ export default function Home() {
       />
       <Hero />
 
-      <section id="zonas" className="border-t border-line px-8 py-27.5">
+      <section id="zonas" className="scroll-mt-36 border-t border-line px-8 py-27.5">
         <div className="mx-auto max-w-[1180px]">
           <Reveal>
             <SectionHeader
@@ -51,7 +58,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="metodo" className="border-t border-line px-8 py-27.5">
+      <section id="metodo" className="scroll-mt-36 border-t border-line px-8 py-27.5">
         <div className="mx-auto max-w-[1180px]">
           <Reveal>
             <SectionHeader
@@ -79,7 +86,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="planes" className="border-t border-line px-8 py-27.5">
+      <section id="planes" className="scroll-mt-36 border-t border-line px-8 py-27.5">
         <div className="mx-auto max-w-[1180px]">
           <Reveal>
             <SectionHeader

@@ -18,6 +18,9 @@ export default function Footer() {
         </div>
         <div className="flex flex-wrap items-center justify-between gap-3 text-[13px] text-muted">
           <span>© 2026 {brand.name} · Fisioterapia Deportiva</span>
+          <Link href="/servicios" className="transition-colors hover:text-foreground">
+            Servicios
+          </Link>
           <Link href="/privacidad" className="transition-colors hover:text-foreground">
             Política de privacidad
           </Link>

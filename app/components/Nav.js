@@ -9,6 +9,7 @@ import { LogOut } from "lucide-react";
 import { toast } from "sonner";
 
 const navLinks = [
+  { href: "/servicios", label: "Servicios" },
   { href: "/#zonas", label: "Zonas" },
   { href: "/#metodo", label: "Método" },
   // { href: "/portal", label: "Portal cliente" },
@@ -34,7 +35,7 @@ export default function Nav({ profile = null }) {
 
   return (
     <nav
-      className={`fixed inset-x-0 top-0 z-[100] flex items-center justify-between gap-3 border-b bg-bg/75 px-4 py-4 backdrop-blur-md transition-colors sm:px-8 sm:py-[22px] ${
+      className={`flex items-center justify-between gap-3 border-b bg-bg/75 px-4 py-4 backdrop-blur-md transition-colors sm:px-8 sm:py-[22px] ${
         scrolled ? "border-line" : "border-transparent"
       }`}
     >

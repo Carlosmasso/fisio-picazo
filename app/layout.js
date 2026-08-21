@@ -2,6 +2,7 @@ import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import ModalProvider from "./components/ModalProvider";
+import ContactTopBar from "./components/ContactTopBar";
 import Nav from "./components/Nav";
 import ScrollPulseProgress from "./components/ScrollPulseProgress";
 import ThemeLabSwitcher from "./components/ThemeLabSwitcher";
@@ -62,7 +63,10 @@ export default async function RootLayout({ children }) {
       <body className="bg-bg font-sans text-foreground antialiased">
         <ScrollPulseProgress />
         <ModalProvider>
-          <Nav profile={profile} />
+          <div className="fixed inset-x-0 top-0 z-[100]">
+            <ContactTopBar />
+            <Nav profile={profile} />
+          </div>
           {children}
         </ModalProvider>
         <ThemeLabSwitcher />

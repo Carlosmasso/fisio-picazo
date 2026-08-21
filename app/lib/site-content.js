@@ -18,6 +18,24 @@ export const location = {
   addressLocality: "Albacete",
   addressCountry: "ES",
   whatsapp: "34619174159",
+  phoneDisplay: "619 17 41 59",
+  email: "info@alvaropicazofisioterapia.es",
+  hours: [
+    {
+      label: "Lunes a viernes",
+      short: "L-V",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      opens: "08:00",
+      closes: "21:00",
+    },
+    {
+      label: "Sábado",
+      short: "Sáb",
+      days: ["Saturday"],
+      opens: "09:00",
+      closes: "15:00",
+    },
+  ],
 };
 
 // The `id` of every zone below must also exist in the zone check
@@ -88,6 +106,91 @@ export const zones = [
       "Control motor del core y progresión de carga en gestos de bisagra de cadera, adaptado a tu deporte de impacto.",
     tags: ["Core", "Movilidad cadera", "Carga"],
     exerciseCount: 11,
+  },
+];
+
+// Servicios reales ofrecidos en consulta, recogidos de
+// https://alvaropicazofisioterapia.es/servicios/ (agosto 2026).
+export const services = [
+  {
+    id: "clinica",
+    title: "Fisioterapia Clínica",
+    icon: "Stethoscope",
+    description:
+      "Abordaje de distintas patologías como lumbalgia, hernia de disco, cefaleas o dolor de cabeza y patología de la espalda.",
+  },
+  {
+    id: "ecografia",
+    title: "Ecografía y Diagnóstico Avanzado",
+    icon: "ScanLine",
+    description:
+      "Diagnóstico precoz y eficiente de toda patología musculoesquelética para ajustar el tratamiento desde el primer día.",
+  },
+  {
+    id: "invasiva",
+    title: "Fisioterapia Invasiva",
+    icon: "Zap",
+    description:
+      "Técnicas de EPTE/EPI (electrólisis percutánea) y de neuromodulación aplicadas por especialistas en la técnica.",
+  },
+  {
+    id: "deportiva",
+    title: "Fisioterapia Deportiva y Readaptación",
+    icon: "Dumbbell",
+    description:
+      "Tratamiento de lesiones de ligamento, meniscos, hombro y roturas musculares, con readaptación hasta la vuelta al deporte.",
+  },
+  {
+    id: "ejercicio-terapeutico",
+    title: "Programa de Ejercicio Terapéutico Individual",
+    icon: "Activity",
+    description:
+      "Ejercicio supervisado y personalizado, especialmente recomendado para problemas crónicos de espalda.",
+  },
+  {
+    id: "neurologica",
+    title: "Fisioterapia Neurológica",
+    icon: "Brain",
+    description:
+      "Atención a ictus, esclerosis múltiple, hemiplejias y distrofia muscular de Duchenne, entre otras patologías neurológicas.",
+  },
+  {
+    id: "atm",
+    title: "Articulación Temporo Mandibular",
+    icon: "Smile",
+    description:
+      "Abordaje de patologías de la mandíbula, problemas de bruxismo o cefaleas asociadas.",
+  },
+  {
+    id: "infantil",
+    title: "Fisioterapia para Niños",
+    icon: "Baby",
+    description:
+      "Educación postural y tratamiento de escoliosis y otra patología del crecimiento.",
+  },
+  {
+    id: "oncologica",
+    title: "Fisioterapia Oncológica",
+    icon: "Ribbon",
+    description: "Manejo de linfedema, retorno venoso y vascularización en pacientes oncológicos.",
+  },
+  {
+    id: "vendaje",
+    title: "Vendaje Neuromuscular y Funcional",
+    icon: "Bandage",
+    description: "Aplicado en esguinces y drenajes linfáticos como apoyo al tratamiento manual.",
+  },
+  {
+    id: "presoterapia",
+    title: "Presoterapia",
+    icon: "Wind",
+    description: "Para piernas cansadas y recuperación circulatoria post-ejercicio.",
+  },
+  {
+    id: "geriatrica",
+    title: "Fisioterapia Geriátrica",
+    icon: "Users",
+    description: "Ejercicios especializados y adaptados a personas mayores.",
   },
 ];
 
