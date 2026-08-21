@@ -117,6 +117,19 @@ html {
   html {
     scroll-behavior: auto;
   }
+
+  /* Sitewide: collapses every CSS transition/animation (reveal fades, the
+     Método scrollytelling cross-fade, hover transitions, etc.) to
+     effectively instant, instead of patching each component individually.
+     JS-driven animation (e.g. CountUp's requestAnimationFrame loop) isn't
+     touched by this and is handled in its own component. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @keyframes draw-pulse {

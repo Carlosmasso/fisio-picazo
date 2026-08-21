@@ -13,6 +13,10 @@ export const heroStats = [
 export const location = {
   name: "Álvaro Picazo Clínica Graus Fisioterapia",
   address: "Clínica Graus, C. Jesús Nazareno, 2, 02002 Albacete, España",
+  streetAddress: "C. Jesús Nazareno, 2",
+  postalCode: "02002",
+  addressLocality: "Albacete",
+  addressCountry: "ES",
   whatsapp: "34619174159",
 };
 

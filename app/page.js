@@ -8,10 +8,32 @@ import PricingSection from "./components/PricingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import LocationSection from "./components/LocationSection";
 import Footer from "./components/Footer";
+import { location } from "./lib/site-content";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  name: location.name,
+  medicalSpecialty: "Physiotherapy",
+  description:
+    "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.",
+  telephone: `+${location.whatsapp}`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: location.streetAddress,
+    postalCode: location.postalCode,
+    addressLocality: location.addressLocality,
+    addressCountry: location.addressCountry,
+  },
+};
 
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      />
       <Hero />
 
       <section id="zonas" className="border-t border-line px-8 py-27.5">
@@ -38,9 +60,7 @@ export default function Home() {
               description="Cuatro fases con objetivos claros. Sabes exactamente en qué punto estás y qué falta para el siguiente."
             />
           </Reveal>
-          <Reveal>
-            <MethodSection />
-          </Reveal>
+          <MethodSection />
         </div>
       </section>
 

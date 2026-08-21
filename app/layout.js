@@ -3,9 +3,16 @@ import { Toaster } from "sonner";
 import "./globals.css";
 import ModalProvider from "./components/ModalProvider";
 import Nav from "./components/Nav";
+import ScrollPulseProgress from "./components/ScrollPulseProgress";
 import ThemeLabSwitcher from "./components/ThemeLabSwitcher";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
 import { getProfile } from "./lib/dal";
+import { brand } from "./lib/site-content";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const title = "Álvaro Picazo · Fisioterapia Deportiva";
+const description =
+  "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -26,9 +33,22 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "Álvaro Picazo · Fisioterapia Deportiva",
-  description:
-    "Recuperación, prevención y rendimiento con seguimiento real: cada plan se ajusta a tu lesión, tu deporte y tu evolución semana a semana.",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: siteUrl,
+    siteName: brand.name,
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
 };
 
 export default async function RootLayout({ children }) {
@@ -40,6 +60,7 @@ export default async function RootLayout({ children }) {
       className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable}`}
     >
       <body className="bg-bg font-sans text-foreground antialiased">
+        <ScrollPulseProgress />
         <ModalProvider>
           <Nav profile={profile} />
           {children}

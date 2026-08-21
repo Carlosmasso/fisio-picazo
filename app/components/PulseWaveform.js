@@ -1,4 +1,5 @@
 import { heroStats } from "../lib/site-content";
+import CountUp from "./CountUp";
 
 export default function PulseWaveform() {
   return (
@@ -12,7 +13,10 @@ export default function PulseWaveform() {
       <div className="absolute top-[0px] right-0 flex gap-[22px] font-mono text-xs text-muted">
         {heroStats.map((stat) => (
           <span key={stat.label}>
-            {stat.label} <b className="font-medium text-foreground">{stat.value}</b>
+            {stat.label}{" "}
+            <b className="font-medium text-foreground">
+              <CountUp value={stat.value} />
+            </b>
           </span>
         ))}
       </div>

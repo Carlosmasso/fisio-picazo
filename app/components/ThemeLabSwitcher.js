@@ -10,15 +10,16 @@ const themes = [
   { id: "sage-sand", label: "Sage & Sand" },
 ];
 
+const defaultTheme = "clinical-calm";
+
 export default function ThemeLabSwitcher() {
   const [active, setActive] = useState("");
   const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("theme-preview") || "";
-    document.documentElement.setAttribute("data-theme-preview", stored);
-    setActive(stored);
+    document.documentElement.setAttribute("data-theme-preview", defaultTheme);
+    setActive(defaultTheme);
     setMounted(true);
   }, []);
 
