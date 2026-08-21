@@ -111,7 +111,7 @@ export default async function PortalPage() {
   const painHistory = await getPainHistory(supabase, profile.id);
   const programHistory = await getProgramHistory(supabase, profile.id);
 
-  const zoneLabel = zones.find((z) => z.id === profile.injury_zone)?.label;
+  const zoneLabel = data ? zones.find((z) => z.id === data.program.zone)?.label : null;
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-[1180px] px-8 pt-32 pb-20">
@@ -121,13 +121,12 @@ export default async function PortalPage() {
             Hola, {profile.full_name?.split(" ")[0] || "paciente"}
           </h1>
           <p className="text-sm text-muted">
-            {zoneLabel ? (
+            {data ? (
               <span className="font-mono text-frost">
-                {zoneLabel.toUpperCase()}
-                {data ? ` · FASE ${data.program.phase}` : ""}
+                {(zoneLabel ?? data.program.zone).toUpperCase()} · FASE {data.program.phase}
               </span>
             ) : (
-              "Aún no tienes una zona asignada."
+              "Aún no tienes un programa asignado."
             )}
           </p>
         </div>

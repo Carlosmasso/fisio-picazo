@@ -18,7 +18,6 @@ create table if not exists public.profiles (
   email text not null,
   full_name text not null default '',
   role text not null default 'patient',
-  injury_zone text,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -29,19 +28,17 @@ alter table public.profiles enable row level security;
 -- existed from an earlier run of this script.
 alter table public.profiles add column if not exists privacy_accepted_at timestamptz;
 
+-- A patient's zone lives on their programs (they can have several, over
+-- time, in different zones) — not on the profile itself. Drops the column
+-- from any earlier version of this script that still had it.
+alter table public.profiles drop column if exists injury_zone;
+
 -- Check constraints are declared here (not inline above) and dropped+recreated
 -- on every run, so re-running this script always converges to the values
 -- below even if the table already existed with an older/drifted constraint.
 alter table public.profiles drop constraint if exists profiles_role_check;
 alter table public.profiles add constraint profiles_role_check
   check (role in ('patient', 'admin'));
-
-alter table public.profiles drop constraint if exists profiles_injury_zone_check;
-alter table public.profiles add constraint profiles_injury_zone_check
-  check (
-    injury_zone is null
-    or injury_zone in ('rodilla', 'hombro', 'isquios', 'tobillo', 'cadera', 'pierna', 'espalda')
-  );
 
 -- =========================================================
 -- 2. exercises — reusable exercise library (title, video, etc.)

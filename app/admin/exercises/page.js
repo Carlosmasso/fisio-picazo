@@ -14,7 +14,6 @@ export default async function AdminExercisesPage({ searchParams }) {
     .select("id, title, description, zone, video_path, created_at")
     .order("created_at", { ascending: false });
 
-    console.log({query})
   if (zoneFilter === "none") {
     query = query.is("zone", null);
   } else if (zoneFilter) {

@@ -17,9 +17,9 @@ export const location = {
 };
 
 // The `id` of every zone below must also exist in the zone check
-// constraints in supabase/schema.sql (profiles.injury_zone, exercises.zone,
-// programs.zone) — those columns feed the admin dropdowns built from this
-// array. Adding a zone here without updating schema.sql will make the
+// constraints in supabase/schema.sql (exercises.zone, programs.zone) —
+// those columns feed the admin dropdowns built from this array. Adding a
+// zone here without updating schema.sql will make the
 // database reject any insert that uses it.
 export const zones = [
   {

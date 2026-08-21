@@ -4,8 +4,8 @@ import { zones } from "../../../lib/site-content";
 import PainChart from "../../../components/PainChart";
 import ProgramHistory from "../../../components/ProgramHistory";
 import CompletedProgramModal from "./CompletedProgramModal";
-import ResetPasswordButton from "./ResetPasswordButton";
-import DeletePatientButton from "./DeletePatientButton";
+import PatientActionsMenu from "../../PatientActionsMenu";
+import ActionForm from "../../ActionForm";
 
 import {
   createProgram,
@@ -96,18 +96,12 @@ export default async function AdminPatientPage({ params, searchParams }) {
     <div>
       <CompletedProgramModal show={justCompleted} />
 
-      <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
+      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold">{patient.full_name || patient.email}</h2>
           <p className="text-sm text-muted">{patient.email}</p>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <ResetPasswordButton patientId={id} />
-          <DeletePatientButton
-            patientId={id}
-            patientName={patient.full_name || patient.email}
-          />
-        </div>
+        <PatientActionsMenu patient={patient} label="Acciones" />
       </div>
 
       <div className="flex flex-col gap-8">
@@ -141,11 +135,11 @@ export default async function AdminPatientPage({ params, searchParams }) {
                     {pe.exercises?.title}
                     {pe.sets ? ` — ${pe.sets}x${pe.reps ?? ""}` : ""}
                   </span>
-                  <form action={removeProgramExercise.bind(null, pe.id, id)}>
+                  <ActionForm action={removeProgramExercise.bind(null, pe.id, id)}>
                     <button type="submit" className="text-xs text-muted hover:text-ember">
                       Quitar
                     </button>
-                  </form>
+                  </ActionForm>
                 </div>
               ))}
               {!programExercises.length && (
@@ -155,7 +149,7 @@ export default async function AdminPatientPage({ params, searchParams }) {
 
             <div className="max-w-md rounded-2xl border border-line bg-surface p-7">
               <h4 className="mb-4 text-sm font-semibold text-muted uppercase">Añadir ejercicio</h4>
-              <form action={addProgramExercise.bind(null, program.id, id)} className="flex flex-col gap-4">
+              <ActionForm action={addProgramExercise.bind(null, program.id, id)} className="flex flex-col gap-4">
                 <label className="block">
                   <span className="mb-1.5 block text-[12.5px] text-muted">Ejercicio</span>
                   <select
@@ -204,7 +198,7 @@ export default async function AdminPatientPage({ params, searchParams }) {
                 >
                   Añadir al programa
                 </button>
-              </form>
+              </ActionForm>
               {!exerciseLibrary?.length && (
                 <p className="mt-3 text-[13px] text-muted">
                   Todavía no hay ejercicios en la biblioteca. Créalos primero en{" "}
@@ -218,7 +212,7 @@ export default async function AdminPatientPage({ params, searchParams }) {
         {!program && (
           <div id="nuevo-programa" className="max-w-md scroll-mt-32 rounded-2xl border border-line bg-surface p-7">
             <h3 className="mb-4 text-sm font-semibold text-muted uppercase">Asignar un programa</h3>
-            <form action={createProgram.bind(null, id)} className="flex flex-col gap-4">
+            <ActionForm action={createProgram.bind(null, id)} className="flex flex-col gap-4">
               <label className="block">
                 <span className="mb-1.5 block text-[12.5px] text-muted">Zona</span>
                 <select
@@ -250,7 +244,7 @@ export default async function AdminPatientPage({ params, searchParams }) {
               >
                 Crear programa
               </button>
-            </form>
+            </ActionForm>
           </div>
         )}
 

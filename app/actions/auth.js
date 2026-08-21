@@ -70,7 +70,6 @@ export async function signUp(prevState, formData) {
 }
 
 export async function signOut() {
-  console.log("signOut called");
   const supabase = await createClient();
   await supabase.auth.signOut();
   revalidatePath("/", "layout");

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "../lib/supabase/server";
 import CreatePatientForm from "./CreatePatientForm";
+import PatientActionsMenu from "./PatientActionsMenu";
 
 export const metadata = { title: "Pacientes · Panel" };
 
@@ -8,7 +9,7 @@ export default async function AdminPatientsPage() {
   const supabase = await createClient();
   const { data: patients } = await supabase
     .from("profiles")
-    .select("id, full_name, email, injury_zone, created_at, programs(status)")
+    .select("id, full_name, email, created_at, programs(status)")
     .eq("role", "patient")
     .order("created_at", { ascending: false });
 
@@ -21,23 +22,34 @@ export default async function AdminPatientsPage() {
           {patients?.map((patient) => {
             const hasActive = patient.programs?.some((p) => p.status === "active");
             return (
-              <Link
+              <div
                 key={patient.id}
-                href={`/admin/patients/${patient.id}`}
-                className="flex items-center justify-between rounded-xl border border-line bg-surface px-5 py-4 transition-colors hover:border-frost"
+                className="flex items-center gap-3 rounded-xl border border-line bg-surface px-5 py-4 transition-colors hover:border-frost"
               >
-                <div>
-                  <div className="font-medium">{patient.full_name || patient.email}</div>
-                  <div className="text-[13px] text-muted">{patient.email}</div>
-                </div>
-                <span
-                  className={`shrink-0 rounded-md px-2.5 py-1 font-mono text-[11px] ${
-                    hasActive ? "bg-frost-dim text-frost" : "bg-ember-dim text-ember"
-                  }`}
+                <Link
+                  href={`/admin/patients/${patient.id}`}
+                  className="flex flex-1 items-center justify-between gap-3"
                 >
-                  {hasActive ? "Programa activo" : "Sin programa"}
-                </span>
-              </Link>
+                  <div>
+                    <div className="font-medium">{patient.full_name || patient.email}</div>
+                    <div className="text-[13px] text-muted">{patient.email}</div>
+                  </div>
+                  <span
+                    className={`shrink-0 rounded-md px-2.5 py-1 font-mono text-[11px] ${
+                      hasActive ? "bg-frost-dim text-frost" : "bg-ember-dim text-ember"
+                    }`}
+                  >
+                    {hasActive ? "Programa activo" : "Sin programa"}
+                  </span>
+                </Link>
+                <PatientActionsMenu
+                  patient={{
+                    id: patient.id,
+                    full_name: patient.full_name,
+                    email: patient.email,
+                  }}
+                />
+              </div>
             );
           })}
 

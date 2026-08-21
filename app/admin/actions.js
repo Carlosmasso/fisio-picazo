@@ -32,7 +32,7 @@ export async function createPatient(prevState, formData) {
 
   revalidatePath("/admin");
   return {
-    success: `Cuenta creada para ${email}. Contraseña temporal: ${tempPassword} — compártesela para que pueda entrar (puede cambiarla luego).`,
+    success: `Cuenta creada para ${email}. Contraseña temporal: '${tempPassword}' — compártesela para que pueda entrar (puede cambiarla luego).`,
   };
 }
 
@@ -51,8 +51,46 @@ export async function resetPatientPassword(patientId, prevState, formData) {
   }
 
   return {
-    success: `Nueva contraseña temporal: ${tempPassword} — compártesela para que pueda entrar.`,
+    success: `Nueva contraseña temporal: '${tempPassword}' — compártesela para que pueda entrar.`,
   };
+}
+
+export async function updatePatient(patientId, prevState, formData) {
+  await requireAdmin();
+
+  const fullName = formData.get("full_name")?.toString().trim();
+  const email = formData.get("email")?.toString().trim();
+
+  if (!fullName) {
+    return { error: "Introduce un nombre." };
+  }
+  if (!email) {
+    return { error: "Introduce un email." };
+  }
+
+  const supabaseAdmin = createAdminClient();
+  const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(patientId, {
+    email,
+    user_metadata: { full_name: fullName },
+  });
+
+  if (authError) {
+    return { error: authError.message };
+  }
+
+  const supabase = await createClient();
+  const { error: profileError } = await supabase
+    .from("profiles")
+    .update({ full_name: fullName, email })
+    .eq("id", patientId);
+
+  if (profileError) {
+    return { error: profileError.message };
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/patients/${patientId}`);
+  return { success: "Datos actualizados." };
 }
 
 export async function deletePatient(patientId, prevState, formData) {
@@ -68,7 +106,7 @@ export async function deletePatient(patientId, prevState, formData) {
   redirect("/admin");
 }
 
-export async function createProgram(patientId, formData) {
+export async function createProgram(patientId, prevState, formData) {
   await requireAdmin();
   const supabase = await createClient();
 
@@ -84,14 +122,19 @@ export async function createProgram(patientId, formData) {
     .eq("patient_id", patientId)
     .eq("status", "active");
 
-  await supabase.from("programs").insert({
+  const { error } = await supabase.from("programs").insert({
     patient_id: patientId,
     zone,
     phase,
     status: "active",
   });
 
+  if (error) {
+    return { error: error.message };
+  }
+
   revalidatePath(`/admin/patients/${patientId}`);
+  return { success: "Programa creado." };
 }
 
 export async function updateProgramStatus(programId, patientId, status) {
@@ -107,7 +150,7 @@ export async function updateProgramStatus(programId, patientId, status) {
   }
 }
 
-export async function addProgramExercise(programId, patientId, formData) {
+export async function addProgramExercise(programId, patientId, prevState, formData) {
   await requireAdmin();
   const supabase = await createClient();
 
@@ -121,7 +164,7 @@ export async function addProgramExercise(programId, patientId, formData) {
     .select("id", { count: "exact", head: true })
     .eq("program_id", programId);
 
-  await supabase.from("program_exercises").insert({
+  const { error } = await supabase.from("program_exercises").insert({
     program_id: programId,
     exercise_id: exerciseId,
     sets,
@@ -130,16 +173,29 @@ export async function addProgramExercise(programId, patientId, formData) {
     order_index: count ?? 0,
   });
 
+  if (error) {
+    return { error: error.message };
+  }
+
   revalidatePath(`/admin/patients/${patientId}`);
+  return { success: "Ejercicio añadido al programa." };
 }
 
-export async function removeProgramExercise(programExerciseId, patientId) {
+export async function removeProgramExercise(programExerciseId, patientId, prevState, formData) {
   await requireAdmin();
   const supabase = await createClient();
 
-  await supabase.from("program_exercises").delete().eq("id", programExerciseId);
+  const { error } = await supabase
+    .from("program_exercises")
+    .delete()
+    .eq("id", programExerciseId);
+
+  if (error) {
+    return { error: error.message };
+  }
 
   revalidatePath(`/admin/patients/${patientId}`);
+  return { success: "Ejercicio quitado del programa." };
 }
 
 export async function createExercise(prevState, formData) {

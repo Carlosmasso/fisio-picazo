@@ -1,4 +1,5 @@
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 import ModalProvider from "./components/ModalProvider";
 import Nav from "./components/Nav";
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }) {
         </ModalProvider>
         <ThemeLabSwitcher />
         <FloatingWhatsApp />
+        <Toaster position="top-right" theme="dark" richColors closeButton />
       </body>
     </html>
   );
