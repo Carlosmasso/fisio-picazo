@@ -22,6 +22,7 @@ export default function ThemeLabSwitcher() {
   useEffect(() => {
     const stored = window.localStorage.getItem("theme-preview") || "";
     document.documentElement.setAttribute("data-theme-preview", stored);
+    setActive(stored);
   }, []);
 
   function select(id) {
