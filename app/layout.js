@@ -7,6 +7,7 @@ import Nav from "./components/Nav";
 import ScrollPulseProgress from "./components/ScrollPulseProgress";
 import ThemeLabSwitcher from "./components/ThemeLabSwitcher";
 import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import { getProfile } from "./lib/dal";
 import { brand } from "./lib/site-content";
 
@@ -71,6 +72,7 @@ export default async function RootLayout({ children }) {
         </ModalProvider>
         <ThemeLabSwitcher />
         <FloatingWhatsApp />
+        <ScrollToTopButton />
         <Toaster position="top-right" theme="dark" richColors closeButton />
       </body>
     </html>
