@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { plans, quarterlyDiscount } from "../lib/site-content";
-import { useModal } from "./ModalProvider";
+import { plans, quarterlyDiscount, location } from "../lib/site-content";
 
 export default function PricingSection() {
   const [quarterly, setQuarterly] = useState(false);
-  const { openModal } = useModal();
 
   return (
     <>
@@ -71,17 +69,20 @@ export default function PricingSection() {
                   </li>
                 ))}
               </ul>
-              <button
-                type="button"
-                onClick={() => openModal("signup")}
-                className={`rounded-lg border px-5 py-2.5 text-sm font-semibold transition-colors ${
+              <a
+                href={`https://wa.me/${location.whatsapp}?text=${encodeURIComponent(
+                  `Hola, me interesa el plan ${plan.name} (${price}€/mes).`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`rounded-lg border px-5 py-2.5 text-center text-sm font-semibold transition-colors ${
                   plan.featured
                     ? "border-ember bg-ember text-bg hover:bg-ember-hover"
                     : "border-line hover:border-frost hover:text-frost"
                 }`}
               >
                 Empezar
-              </button>
+              </a>
             </div>
           );
         })}

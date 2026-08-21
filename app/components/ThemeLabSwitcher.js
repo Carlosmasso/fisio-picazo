@@ -11,18 +11,15 @@ const themes = [
 ];
 
 export default function ThemeLabSwitcher() {
-  // Always starts empty so server- and client-rendered markup match exactly.
-  // The stored preference is applied to the DOM directly in the effect below
-  // (not mirrored into this state), so this button-highlight resets to
-  // "Oscuro" on reload even though the applied palette is preserved — an
-  // acceptable trade-off for a temporary comparison tool.
   const [active, setActive] = useState("");
+  const [mounted, setMounted] = useState(false);
   const [show, setShow] = useState(true);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("theme-preview") || "";
     document.documentElement.setAttribute("data-theme-preview", stored);
     setActive(stored);
+    setMounted(true);
   }, []);
 
   function select(id) {
@@ -31,7 +28,8 @@ export default function ThemeLabSwitcher() {
     window.localStorage.setItem("theme-preview", id);
   }
 
-  if (!show) return null
+  // No renderizar hasta que el efecto se haya ejecutado
+  if (!mounted || !show) return null;
 
   return (
     <div className="fixed bottom-4 right-4 z-[300] flex max-w-[calc(100vw-2rem)] flex-wrap gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg">
