@@ -1,19 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0c0f;
-  --foreground: #edeff1;
-
-  --color-bg: #0a0c0f;
-  --color-surface: #15181c;
-  --color-surface-2: #1c2025;
-  --color-line: #262b31;
-  --color-muted: #8b939f;
-  --color-ember: #ff5a3c;
-  --color-ember-hover: #ff7050;
-  --color-ember-dim: #7a2c1f;
-  --color-frost: #6fe7dd;
-  --color-frost-dim: #1c3d3a;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef2f6;
+  --color-line: #e2e8f0;
+  --color-muted: #64748b;
+  --color-ember: #2563eb;
+  --color-ember-hover: #3b76ef;
+  --color-ember-dim: #dbe7fd;
+  --color-frost: #10b981;
+  --color-frost-dim: #d1fae5;
 }
 
 @theme inline {
@@ -54,8 +53,8 @@
   --color-frost-dim: #ccfbf1;
 }
 
-[data-theme-preview="clinical-calm"] {
-  --background: #f8fafc;
+[data-theme-preview="dark"] {
+  /* --background: #f8fafc;
   --foreground: #0f172a;
   --color-bg: #f8fafc;
   --color-surface: #ffffff;
@@ -66,7 +65,21 @@
   --color-ember-hover: #3b76ef;
   --color-ember-dim: #dbe7fd;
   --color-frost: #10b981;
-  --color-frost-dim: #d1fae5;
+  --color-frost-dim: #d1fae5; */
+
+  --background: #0a0c0f;
+  --foreground: #edeff1;
+
+  --color-bg: #0a0c0f;
+  --color-surface: #15181c;
+  --color-surface-2: #1c2025;
+  --color-line: #262b31;
+  --color-muted: #8b939f;
+  --color-ember: #ff5a3c;
+  --color-ember-hover: #ff7050;
+  --color-ember-dim: #7a2c1f;
+  --color-frost: #6fe7dd;
+  --color-frost-dim: #1c3d3a;
 }
 
 [data-theme-preview="warm-sport"] {

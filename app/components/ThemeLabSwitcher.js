@@ -3,14 +3,12 @@
 import { useEffect, useState } from "react";
 
 const themes = [
-  { id: "", label: "Oscuro (actual)" },
+  { id: "", label: "Clinical Calm" },
   { id: "frost-ember-light", label: "Frost & Ember claro" },
-  { id: "clinical-calm", label: "Clinical Calm" },
   { id: "warm-sport", label: "Warm Sport Energy" },
   { id: "sage-sand", label: "Sage & Sand" },
+  { id: "dark", label: "Oscuro" },
 ];
-
-const defaultTheme = "clinical-calm";
 
 export default function ThemeLabSwitcher() {
   const [active, setActive] = useState("");
@@ -18,8 +16,8 @@ export default function ThemeLabSwitcher() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme-preview", defaultTheme);
-    setActive(defaultTheme);
+    document.documentElement.setAttribute("data-theme-preview", "");
+    setActive("");
     setMounted(true);
   }, []);
 
