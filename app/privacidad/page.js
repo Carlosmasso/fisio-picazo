@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           {brand.name} ({brand.tagline}), con domicilio en {brand.city}, es el
           responsable del tratamiento de tus datos personales en esta plataforma.
           Para cualquier consulta relacionada con tus datos, puedes escribir a{" "}
-          <span className="text-foreground">[email de contacto pendiente]</span>.
+          <span className="text-foreground">info@alvaropicazofisioterapia.es</span>.
         </p>
       </section>
 
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
         </ul>
         <p className={pClass}>
           Para ejercer cualquiera de estos derechos, escribe a{" "}
-          <span className="text-foreground">[email de contacto pendiente]</span>.
+          <span className="text-foreground">info@alvaropicazofisioterapia.es</span>.
           También tienes derecho a presentar una reclamación ante la Agencia
           Española de Protección de Datos (aepd.es).
         </p>

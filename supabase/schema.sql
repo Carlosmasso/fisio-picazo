@@ -134,9 +134,17 @@ create index if not exists exercise_logs_program_exercise_id_idx on public.exerc
 -- =========================================================
 -- 6. Helper: is_admin() — SECURITY DEFINER avoids RLS recursion
 --    when a policy on profiles needs to query profiles itself.
+--    Lives in a `private` schema (not exposed by PostgREST), so it
+--    can't be called as a public REST RPC endpoint — only from SQL,
+--    e.g. from inside RLS policies. This is what the Supabase
+--    security advisor's "SECURITY DEFINER function executable by
+--    anon/authenticated" warnings ask for.
 -- =========================================================
 
-create or replace function public.is_admin()
+create schema if not exists private;
+grant usage on schema private to authenticated, anon;
+
+create or replace function private.is_admin()
 returns boolean
 language sql
 security definer
@@ -156,6 +164,7 @@ $$;
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
+set search_path = public
 as $$
 begin
   new.updated_at = now();
@@ -175,6 +184,12 @@ create trigger trg_programs_updated_at
 
 -- =========================================================
 -- 8. Auto-create a profile row when someone signs up
+--    Stays in `public` (the trigger on auth.users runs as Supabase's
+--    own internal role, not authenticated/anon, so moving schemas
+--    isn't needed here) — but it's never meant to be called directly,
+--    so its EXECUTE grant to anon/authenticated is revoked below.
+--    That's the Supabase security advisor's own suggested fix for
+--    "SECURITY DEFINER function executable by anon/authenticated".
 -- =========================================================
 
 create or replace function public.handle_new_user()
@@ -198,6 +213,8 @@ begin
 end;
 $$;
 
+revoke execute on function public.handle_new_user() from anon, authenticated;
+
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
@@ -211,17 +228,17 @@ create trigger on_auth_user_created
 drop policy if exists "profiles_select_own_or_admin" on public.profiles;
 create policy "profiles_select_own_or_admin"
   on public.profiles for select
-  using (id = auth.uid() or public.is_admin());
+  using (id = auth.uid() or private.is_admin());
 
 drop policy if exists "profiles_update_own_or_admin" on public.profiles;
 create policy "profiles_update_own_or_admin"
   on public.profiles for update
-  using (id = auth.uid() or public.is_admin());
+  using (id = auth.uid() or private.is_admin());
 
 drop policy if exists "profiles_insert_admin" on public.profiles;
 create policy "profiles_insert_admin"
   on public.profiles for insert
-  with check (public.is_admin());
+  with check (private.is_admin());
 
 -- exercises: any authenticated user can read the library; only admin writes.
 drop policy if exists "exercises_select_authenticated" on public.exercises;
@@ -232,27 +249,27 @@ create policy "exercises_select_authenticated"
 drop policy if exists "exercises_admin_write" on public.exercises;
 create policy "exercises_admin_write"
   on public.exercises for all
-  using (public.is_admin())
-  with check (public.is_admin());
+  using (private.is_admin())
+  with check (private.is_admin());
 
 -- programs: a patient sees only their own programs; only admin assigns/edits them.
 drop policy if exists "programs_select_own_or_admin" on public.programs;
 create policy "programs_select_own_or_admin"
   on public.programs for select
-  using (patient_id = auth.uid() or public.is_admin());
+  using (patient_id = auth.uid() or private.is_admin());
 
 drop policy if exists "programs_admin_write" on public.programs;
 create policy "programs_admin_write"
   on public.programs for all
-  using (public.is_admin())
-  with check (public.is_admin());
+  using (private.is_admin())
+  with check (private.is_admin());
 
 -- program_exercises: readable by the owning patient; only admin writes.
 drop policy if exists "program_exercises_select_own_or_admin" on public.program_exercises;
 create policy "program_exercises_select_own_or_admin"
   on public.program_exercises for select
   using (
-    public.is_admin()
+    private.is_admin()
     or exists (
       select 1 from public.programs p
       where p.id = program_exercises.program_id
@@ -263,30 +280,30 @@ create policy "program_exercises_select_own_or_admin"
 drop policy if exists "program_exercises_admin_write" on public.program_exercises;
 create policy "program_exercises_admin_write"
   on public.program_exercises for all
-  using (public.is_admin())
-  with check (public.is_admin());
+  using (private.is_admin())
+  with check (private.is_admin());
 
 -- exercise_logs: a patient can read/insert only their own logs; only admin edits/deletes.
 drop policy if exists "exercise_logs_select_own_or_admin" on public.exercise_logs;
 create policy "exercise_logs_select_own_or_admin"
   on public.exercise_logs for select
-  using (patient_id = auth.uid() or public.is_admin());
+  using (patient_id = auth.uid() or private.is_admin());
 
 drop policy if exists "exercise_logs_insert_own_or_admin" on public.exercise_logs;
 create policy "exercise_logs_insert_own_or_admin"
   on public.exercise_logs for insert
-  with check (patient_id = auth.uid() or public.is_admin());
+  with check (patient_id = auth.uid() or private.is_admin());
 
 drop policy if exists "exercise_logs_admin_update" on public.exercise_logs;
 create policy "exercise_logs_admin_update"
   on public.exercise_logs for update
-  using (public.is_admin())
-  with check (public.is_admin());
+  using (private.is_admin())
+  with check (private.is_admin());
 
 drop policy if exists "exercise_logs_admin_delete" on public.exercise_logs;
 create policy "exercise_logs_admin_delete"
   on public.exercise_logs for delete
-  using (public.is_admin());
+  using (private.is_admin());
 
 -- =========================================================
 -- 10. Storage — private bucket for exercise videos
@@ -304,17 +321,26 @@ create policy "exercise_videos_select_authenticated"
 drop policy if exists "exercise_videos_admin_insert" on storage.objects;
 create policy "exercise_videos_admin_insert"
   on storage.objects for insert
-  with check (bucket_id = 'exercise-videos' and public.is_admin());
+  with check (bucket_id = 'exercise-videos' and private.is_admin());
 
 drop policy if exists "exercise_videos_admin_update" on storage.objects;
 create policy "exercise_videos_admin_update"
   on storage.objects for update
-  using (bucket_id = 'exercise-videos' and public.is_admin());
+  using (bucket_id = 'exercise-videos' and private.is_admin());
 
 drop policy if exists "exercise_videos_admin_delete" on storage.objects;
 create policy "exercise_videos_admin_delete"
   on storage.objects for delete
-  using (bucket_id = 'exercise-videos' and public.is_admin());
+  using (bucket_id = 'exercise-videos' and private.is_admin());
+
+-- =========================================================
+-- 10b. Cleanup: drop the old public-schema copy of is_admin() now
+--      that nothing references it — it used to be exposed as a
+--      public REST RPC endpoint (/rest/v1/rpc/is_admin), which the
+--      Supabase security advisor flags. Safe to re-run.
+-- =========================================================
+
+drop function if exists public.is_admin();
 
 -- =========================================================
 -- 11. Promote yourself to admin (run manually, once)

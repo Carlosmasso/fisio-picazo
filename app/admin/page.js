@@ -37,14 +37,14 @@ export default async function AdminPatientsPage({ searchParams }) {
               >
                 <Link
                   href={`/admin/patients/${patient.id}`}
-                  className="flex flex-1 items-center justify-between gap-3"
+                  className="gap-3 grid flex-col md:flex  md:flex-row flex-1 items-center justify-between gap-3"
                 >
                   <div>
                     <div className="font-medium">{patient.full_name || patient.email}</div>
                     <div className="text-[13px] text-muted">{patient.email}</div>
                   </div>
                   <span
-                    className={`shrink-0 rounded-md px-2.5 py-1 font-mono text-[11px] ${
+                    className={`text-center shrink-0 rounded-md px-2.5 py-1 font-mono text-[11px] ${
                       hasActive ? "bg-frost-dim text-frost" : "bg-ember-dim text-ember"
                     }`}
                   >

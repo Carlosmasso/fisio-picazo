@@ -110,14 +110,14 @@ export default async function AdminPatientPage({ params, searchParams }) {
         {program && (
           <div>
             <div className="mb-8 flex flex-wrap items-center gap-4 rounded-2xl border border-line bg-surface p-6">
-              <span className="font-mono text-ember">
+              <span className="font-mono text-ember w-full text-center md:w-auto md:text-left">
                 {zones.find((z) => z.id === program.zone)?.label ?? program.zone} · FASE{" "}
                 {program.phase}
               </span>
-              <form action={updateProgramStatus.bind(null, program.id, id, "completed")} className="ml-auto">
+              <form action={updateProgramStatus.bind(null, program.id, id, "completed")} className="w-full md:w-auto md:ml-auto">
                 <button
                   type="submit"
-                  className="rounded-lg border border-line px-4 py-2 text-sm transition-colors hover:border-frost hover:text-frost"
+                  className="w-full md:w-auto rounded-lg border border-line px-4 py-2 text-sm transition-colors hover:border-frost hover:text-frost"
                 >
                   Marcar programa completado
                 </button>
