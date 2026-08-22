@@ -2,22 +2,31 @@ import Link from "next/link";
 import { createClient } from "../lib/supabase/server";
 import CreatePatientForm from "./CreatePatientForm";
 import PatientActionsMenu from "./PatientActionsMenu";
+import PatientsSearchPanel from "./PatientsSearchPanel";
 
 export const metadata = { title: "Pacientes · Panel" };
 
-export default async function AdminPatientsPage() {
+export default async function AdminPatientsPage({ searchParams }) {
+  const { q } = await searchParams;
   const supabase = await createClient();
-  const { data: patients } = await supabase
+
+  let query = supabase
     .from("profiles")
     .select("id, full_name, email, created_at, programs(status)")
     .eq("role", "patient")
     .order("created_at", { ascending: false });
 
+  const safeQ = q ? q.trim().replace(/[,()]/g, "") : "";
+  if (safeQ) {
+    query = query.or(`full_name.ilike.%${safeQ}%,email.ilike.%${safeQ}%`);
+  }
+
+  const { data: patients } = await query;
+
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_360px]">
       <div>
-        <h2 className="mb-6 text-lg font-semibold">Pacientes ({patients?.length ?? 0})</h2>
-
+        <PatientsSearchPanel title={`Pacientes (${patients?.length ?? 0})`} value={q}>
         <div className="flex flex-col gap-3">
           {patients?.map((patient) => {
             const hasActive = patient.programs?.some((p) => p.status === "active");
@@ -54,9 +63,14 @@ export default async function AdminPatientsPage() {
           })}
 
           {!patients?.length && (
-            <p className="text-sm text-muted">Todavía no hay pacientes registrados.</p>
+            <p className="text-sm text-muted">
+              {safeQ
+                ? "No hay pacientes que coincidan con la búsqueda."
+                : "Todavía no hay pacientes registrados."}
+            </p>
           )}
         </div>
+        </PatientsSearchPanel>
       </div>
 
       <CreatePatientForm />
