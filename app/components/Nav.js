@@ -47,7 +47,7 @@ export default function Nav({ profile = null }) {
   return (
     <nav
       ref={navRef}
-      className={`relative flex items-center justify-between gap-3 border-b bg-bg/75 px-4 py-4 backdrop-blur-md transition-colors sm:px-8 sm:py-[22px] ${
+      className={`bg-transparent relative flex items-center justify-between gap-3 border-b bg-bg/75 px-4 py-4 backdrop-blur-md transition-colors sm:px-8 sm:py-[22px] ${
         scrolled ? "border-line" : "border-transparent"
       }`}
     >

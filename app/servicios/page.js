@@ -57,7 +57,10 @@ export default function ServiciosPage() {
         {services.map((service) => {
           const Icon = icons[service.icon];
           return (
-            <div key={service.id} className="rounded-2xl border border-line bg-surface p-7">
+            <div
+              key={service.id}
+              className="rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-ember-dim hover:shadow-[0_20px_45px_-28px_var(--color-ember)]"
+            >
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-ember-dim bg-ember/10">
                 <Icon size={18} className="text-ember" />
               </div>

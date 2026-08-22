@@ -15,10 +15,10 @@ export default function ZonesSection() {
             key={z.id}
             type="button"
             onClick={() => setActiveZone(z.id)}
-            className={`rounded-full border px-5 py-2.5 text-sm transition-colors ${
+            className={`rounded-full border px-5 py-2.5 text-sm transition-all duration-300 hover:-translate-y-0.5 ${
               z.id === activeZone
-                ? "border-frost bg-frost-dim text-frost"
-                : "border-line bg-surface text-muted hover:border-muted hover:text-foreground"
+                ? "border-frost bg-frost-dim text-frost shadow-[0_10px_30px_-16px_var(--color-frost)]"
+                : "border-line bg-surface text-muted hover:border-muted hover:text-foreground hover:shadow-[0_10px_24px_-18px_rgba(0,0,0,0.3)]"
             }`}
           >
             {z.label}
