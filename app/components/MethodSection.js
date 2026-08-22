@@ -4,70 +4,64 @@ import { useEffect, useRef, useState } from "react";
 import { methodSteps } from "../lib/site-content";
 
 export default function MethodSection() {
-  const containerRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const ref = useRef(null);
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    function onScroll() {
-      const el = containerRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const scrollableHeight = rect.height - window.innerHeight;
-      if (scrollableHeight <= 0) return;
-      const progress = Math.min(1, Math.max(0, -rect.top / scrollableHeight));
-      const index = Math.min(methodSteps.length - 1, Math.floor(progress * methodSteps.length));
-      setActiveIndex(index);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: `${methodSteps.length * 70}vh` }} className="relative">
-      <div className="sticky top-0 flex h-screen flex-col justify-center gap-10">
-        <div className="flex items-center gap-2">
-          {methodSteps.map((step, i) => (
-            <div key={step.num} className="flex flex-1 items-center gap-2">
-              <span
-                className={`shrink-0 font-mono text-xs transition-colors duration-500 ${
-                  i === activeIndex ? "text-ember" : "text-muted"
-                }`}
-              >
-                {step.num}
-              </span>
-              <span
-                className={`h-px flex-1 transition-colors duration-500 ${
-                  i <= activeIndex ? "bg-ember" : "bg-line"
-                }`}
-              />
-            </div>
-          ))}
-        </div>
-
-        <div className="relative min-h-[220px] sm:min-h-[160px]">
-          {methodSteps.map((step, i) => (
-            <div
-              key={step.num}
-              className={`absolute inset-0 transition-all duration-500 ${
-                i === activeIndex
-                  ? "translate-y-0 opacity-100"
-                  : i < activeIndex
-                    ? "-translate-y-6 opacity-0 pointer-events-none"
-                    : "translate-y-6 opacity-0 pointer-events-none"
+    <div ref={ref}>
+      <div className="mb-12 flex items-center gap-2">
+        {methodSteps.map((step, i) => (
+          <div key={step.num} className="flex flex-1 items-center gap-2">
+            <span
+              className={`shrink-0 font-mono text-xs transition-colors duration-500 ${
+                shown ? "text-ember" : "text-muted"
               }`}
+              style={{ transitionDelay: shown ? `${i * 150}ms` : "0ms" }}
             >
-              <h3 className="mb-3 font-display text-[clamp(26px,4vw,40px)] font-semibold">
-                {step.title}
-              </h3>
-              <p className="max-w-[560px] text-base text-muted">{step.description}</p>
-            </div>
-          ))}
-        </div>
+              {step.num}
+            </span>
+            <span className="relative h-px flex-1 overflow-hidden bg-line">
+              <span
+                className={`absolute inset-y-0 left-0 w-full origin-left bg-ember transition-transform duration-700 ease-out ${
+                  shown ? "scale-x-100" : "scale-x-0"
+                }`}
+                style={{ transitionDelay: shown ? `${i * 150}ms` : "0ms" }}
+              />
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-4">
+        {methodSteps.map((step, i) => (
+          <div
+            key={step.num}
+            className={`transition-all duration-700 ease-out ${
+              shown ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
+            style={{ transitionDelay: shown ? `${i * 150}ms` : "0ms" }}
+          >
+            <h3 className="mb-2.5 font-display text-lg font-semibold">{step.title}</h3>
+            <p className="text-[14.5px] text-muted">{step.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

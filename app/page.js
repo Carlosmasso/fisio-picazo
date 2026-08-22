@@ -67,7 +67,9 @@ export default function Home() {
               description="Cuatro fases con objetivos claros. Sabes exactamente en qué punto estás y qué falta para el siguiente."
             />
           </Reveal>
-          <MethodSection />
+          <Reveal>
+            <MethodSection />
+          </Reveal>
         </div>
       </section>
 

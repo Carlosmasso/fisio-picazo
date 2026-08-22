@@ -25,7 +25,7 @@ export default function ProgramHistory({ programs }) {
                 <span className="rounded-md border border-line px-2.5 py-1 font-mono text-[11px] text-muted">
                   {statusLabel[p.status] ?? p.status}
                 </span>
-                <span className="text-muted transition-transform group-open:rotate-180">⌄</span>
+                <span className="h-[25px] text-muted transition-transform group-open:rotate-180">⌄</span>
               </span>
             </summary>
             <div className="border-t border-line px-4 py-3">
