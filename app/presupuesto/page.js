@@ -6,8 +6,6 @@ import {
   roadmap,
   totalMarket,
   totalFinal,
-  savings,
-  savingsPct,
   frontendPct,
   backendPct,
   iva,
@@ -197,7 +195,7 @@ export default function PresupuestoPage() {
           <div className="mb-6 grid grid-cols-2 gap-6">
             <div>
               <div className="mb-1 font-mono text-[11px] tracking-[0.08em] text-muted uppercase">
-                Precio de mercado
+                Valor estimado de mercado
               </div>
               <div className="font-mono text-2xl text-muted line-through">{eur(totalMarket)}</div>
             </div>
@@ -219,10 +217,6 @@ export default function PresupuestoPage() {
               Total con IVA: <b className="font-mono text-frost">{eurCents(totalWithIva)}</b>
             </span>
           </div>
-          <p className="text-sm text-muted">
-            Ahorro frente al precio de mercado:{" "}
-            <b className="font-mono text-ember">{eur(savings)}</b> ({savingsPct}%)
-          </p>
         </div>
 
         <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-frost bg-frost-dim/40 p-7">
@@ -264,8 +258,9 @@ export default function PresupuestoPage() {
               Incluido, sin coste
             </div>
             <p className="text-[14.5px] text-muted">
-              Una ronda de ajustes menores tras la entrega — retoques y pequeños
-              cambios sobre lo ya construido.
+              Una ronda de ajustes menores tras la entrega — cambios de texto,
+              estilo o corrección de comportamientos sobre lo ya construido.
+              Cualquier funcionalidad nueva se presupuesta aparte.
             </p>
           </div>
           <div className={cardClass}>
@@ -277,7 +272,8 @@ export default function PresupuestoPage() {
               cambios, corrección de incidencias, actualizaciones, dudas—, puedo
               ofrecerte un mantenimiento mensual desde{" "}
               <b className="text-foreground">50–75 €/mes</b>, sin permanencia
-              mínima.
+              mínima. No incluye funcionalidades nuevas de tamaño medio o
+              grande ni rediseños completos — eso se presupuesta aparte.
             </p>
           </div>
         </div>
@@ -363,7 +359,10 @@ export default function PresupuestoPage() {
             <ul className="flex flex-col gap-1.5 text-[14.5px] text-muted">
               <li>— Código fuente completo</li>
               <li>— Sin licencias de terceros más allá de los servicios usados</li>
-              <li>— Una ronda de ajustes menores tras la entrega</li>
+              <li>
+                — Una ronda de ajustes menores tras la entrega (texto, estilo,
+                corrección de comportamientos; funcionalidad nueva aparte)
+              </li>
             </ul>
           </div>
           <div>
@@ -373,7 +372,12 @@ export default function PresupuestoPage() {
             <ul className="flex flex-col gap-1.5 text-[14.5px] text-muted">
               <li>— Coste de hosting, dominio o base de datos (ver infraestructura)</li>
               <li>— Fotografía o vídeo real de la clínica</li>
-              <li>— Revisión legal de la política de privacidad</li>
+              <li>
+                — Auditoría o asesoría legal RGPD: se implementan las medidas
+                técnicas de seguridad (acceso restringido, cifrado, control de
+                datos por paciente), pero no incluye revisión legal del
+                cumplimiento normativo
+              </li>
             </ul>
           </div>
           <div>

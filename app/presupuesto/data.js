@@ -15,7 +15,7 @@ export const modules = [
   {
     n: "02",
     title: "Autenticación y seguridad",
-    market: 900,
+    market: 1200,
     final: 380,
     items: [
       "Sistema de acceso propio: solo tú das de alta a los pacientes, nadie puede registrarse por su cuenta.",
@@ -52,7 +52,7 @@ export const modules = [
   {
     n: "05",
     title: "Base de datos y backend",
-    market: 700,
+    market: 900,
     final: 325,
     items: [
       "Estructura de datos completa (pacientes, programas, ejercicios, historial) con reglas de acceso a nivel de base de datos.",

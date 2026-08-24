@@ -7,6 +7,9 @@ const themes = [
   { id: "frost-ember-light", label: "Frost & Ember claro" },
   { id: "warm-sport", label: "Warm Sport Energy" },
   { id: "sage-sand", label: "Sage & Sand" },
+  { id: "granate-clasico", label: "Granate clásico" },
+  { id: "granate-gris", label: "Granate sobre gris" },
+  { id: "granate-calido", label: "Granate cálido" },
   { id: "dark", label: "Oscuro" },
 ];
 
