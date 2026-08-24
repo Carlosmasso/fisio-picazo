@@ -22,7 +22,7 @@ export default function Hero() {
       />
 
       <div className="mx-auto flex min-h-screen w-full max-w-[1180px] flex-col justify-center px-5 pt-28 pb-10 sm:px-8 sm:pt-36 sm:pb-15">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="grid items-center gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-16">
           <div>
             <div className="mb-4 flex items-center gap-2.5 font-mono text-xs tracking-[0.12em] text-frost uppercase before:h-px before:w-5.5 before:bg-frost sm:mb-5.5">
               Fisioterapia deportiva &amp; rendimiento
