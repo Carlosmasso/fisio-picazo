@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { brand } from "../lib/site-content";
+import ThemeLabSwitcher from "./ThemeLabSwitcher";
 
 export default function Footer() {
   return (
@@ -25,6 +26,7 @@ export default function Footer() {
             Política de privacidad
           </Link>
           <span className="font-mono">{brand.city}</span>
+          <ThemeLabSwitcher />
         </div>
       </div>
     </footer>

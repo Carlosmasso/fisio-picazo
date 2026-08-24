@@ -53,11 +53,15 @@ export default function Nav({ profile = null }) {
     >
       <Link
         href="/"
-        className="flex shrink-0 items-center gap-2 font-display text-base font-bold tracking-wide sm:gap-2.5 sm:text-lg"
+        className="flex shrink-0 items-center gap-3 font-display"
       >
-        <span className="h-2 w-2 shrink-0 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)]" />
-        {brand.name.toUpperCase()}
-        <span className="hidden font-normal text-muted sm:inline"> · {brand.tagline}</span>
+        <span className="h-2 w-2 shrink-0 rounded-full bg-ember shadow-[0_0_12px_var(--color-ember)] mt-1" />
+        <div className="flex flex-col ">
+          <div className="text-base font-bold tracking-wide sm:text-lg">
+            {brand.name.toUpperCase()}
+          </div>
+          <span className="text-xs font-normal text-muted sm:text-sm">{brand.tagline}</span>
+        </div>
       </Link>
 
       <div className="hidden gap-9 text-sm text-muted md:flex">

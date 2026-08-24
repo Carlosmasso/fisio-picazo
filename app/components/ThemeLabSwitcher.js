@@ -12,13 +12,9 @@ const themes = [
 
 export default function ThemeLabSwitcher() {
   const [active, setActive] = useState("");
-  const [mounted, setMounted] = useState(false);
-  const [show, setShow] = useState(true);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme-preview", "");
-    setActive("");
-    setMounted(true);
   }, []);
 
   function select(id) {
@@ -27,28 +23,18 @@ export default function ThemeLabSwitcher() {
     window.localStorage.setItem("theme-preview", id);
   }
 
-  // No renderizar hasta que el efecto se haya ejecutado
-  if (!mounted || !show) return null;
-
   return (
-    <div className="fixed bottom-4 right-4 z-[300] flex max-w-[calc(100vw-2rem)] flex-wrap gap-2 rounded-xl border border-line bg-surface p-3 shadow-lg">
+    <select
+      value={active}
+      onChange={(e) => select(e.target.value)}
+      aria-label="Vista previa de tema (herramienta interna)"
+      className="rounded-md border border-line bg-surface-2 px-2 py-1 font-mono text-[11px] text-muted focus:border-frost focus:outline-none"
+    >
       {themes.map((t) => (
-        <button
-          key={t.id}
-          type="button"
-          onClick={() => select(t.id)}
-          className={`rounded-lg border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors ${
-            active === t.id
-              ? "border-ember bg-ember text-bg"
-              : "border-line text-muted hover:border-frost hover:text-frost"
-          }`}
-        >
+        <option key={t.id} value={t.id}>
           {t.label}
-        </button>
+        </option>
       ))}
-      <button type="button" onClick={() => setShow(false)} className="rounded-lg border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors border-line text-muted hover:border-frost hover:text-frost">
-        X
-      </button>
-    </div>
+    </select>
   );
 }
