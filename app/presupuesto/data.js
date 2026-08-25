@@ -2,8 +2,8 @@ export const modules = [
   {
     n: "01",
     title: "Sitio web corporativo",
-    market: 1800,
-    final: 760,
+    market: 800,
+    final: 500,
     items: [
       "Diseño a medida completo (no plantilla): hero con estadísticas animadas, zonas de lesión, método de trabajo con scroll narrativo, planes y ubicación.",
       "Sección “Nuestros servicios” con los 12 servicios reales de la clínica.",
@@ -15,8 +15,8 @@ export const modules = [
   {
     n: "02",
     title: "Autenticación y seguridad",
-    market: 1200,
-    final: 380,
+    market: 550,
+    final: 245,
     items: [
       "Sistema de acceso propio: solo tú das de alta a los pacientes, nadie puede registrarse por su cuenta.",
       "Recuperación de contraseña por email.",
@@ -27,8 +27,8 @@ export const modules = [
   {
     n: "03",
     title: "Panel de administración",
-    market: 1800,
-    final: 700,
+    market: 800,
+    final: 450,
     items: [
       "Alta, edición y baja de pacientes, con borrado en cascada de todo lo asociado.",
       "Menú de acciones por paciente: editar información, restablecer contraseña, eliminar cuenta (con confirmación).",
@@ -40,8 +40,8 @@ export const modules = [
   {
     n: "04",
     title: "Portal del paciente",
-    market: 900,
-    final: 380,
+    market: 400,
+    final: 245,
     items: [
       "Cada paciente ve solo su plan activo: ejercicios de hoy, series y repeticiones.",
       "Gráfico de evolución del dolor (EVA) sesión a sesión.",
@@ -52,8 +52,8 @@ export const modules = [
   {
     n: "05",
     title: "Base de datos y backend",
-    market: 900,
-    final: 325,
+    market: 400,
+    final: 210,
     items: [
       "Estructura de datos completa (pacientes, programas, ejercicios, historial) con reglas de acceso a nivel de base de datos.",
       "Almacenamiento privado de vídeos de ejercicios.",
@@ -63,8 +63,8 @@ export const modules = [
   {
     n: "06",
     title: "Detalles y experiencia de uso",
-    market: 500,
-    final: 160,
+    market: 200,
+    final: 100,
     items: [
       "Indicadores de carga y confirmaciones visuales en cada acción.",
       "Política de privacidad adaptada a datos de salud (RGPD).",
@@ -75,8 +75,8 @@ export const modules = [
     n: "07",
     title: "Pasarela de pagos",
     pending: true,
-    market: 1400,
-    final: 545,
+    market: 600,
+    final: 350,
     items: [
       "Integración de cobro con pasarela de pago (Stripe u otra) para los planes ya definidos en la web.",
       "Cobro recurrente automático — sin gestionar cada mes a mano.",
